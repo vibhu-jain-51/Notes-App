@@ -1,0 +1,61 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header>h1{
+    text-align: center;
+}
+
+#container{
+    background-color: rgb(44, 43, 43);
+    margin: 10px auto;
+    width: 99.4%;
+    height: 200px;
+}
+
+.title{
+    
+    margin-top: 20px;
+    margin-left:2%;
+    width:94.7%;
+    height: 20px;
+    border-radius: 3px;
+    padding: 3px;
+    border: 0px;
+}
+
+.note{  
+    margin-top: 20px;
+    margin-left:2%;
+    width:95%;
+    height: 50px;
+    border-radius: 5px;
+    padding: 1px;
+    border: 0px;
+}
+
+.btns{
+    margin-top: 20px;
+    margin-left: 2%;
+    height: 30px;
+    width: 80px;
+    padding: 5px;
+    background-color: rgb(0, 76, 255);
+    border-radius: 4px;
+    color: white;
+    border: 0px;
+}
+
+.note-grid{
+    width: 99.4%;
+    margin: 10px auto;
+}
+
+.for-error{
+    background-color: rgb(255, 15, 63);
+    color: white;
+    padding: 5px;
+    border: 0px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
