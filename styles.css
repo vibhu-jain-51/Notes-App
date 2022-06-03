@@ -6,6 +6,28 @@ header>h1{
     text-align: center;
 }
 
+.navbar{
+    padding: 0px;
+    margin: 0px;
+    background-color: #3b3b3b;
+    font-size: 20px;
+    color: rgb(90, 255, 244);
+}
+
+ul{
+    list-style-type: none;
+   
+    padding: 5px 10px;
+}
+li{
+    display: inline;
+    padding: 6px;
+}
+li:hover{
+    background-color: rgb(90, 90, 90);
+    cursor: pointer;
+}
+
 #container{
     background-color: rgb(44, 43, 43);
     margin: 10px auto;
@@ -46,7 +68,7 @@ header>h1{
     border: 0px;
 }
 
-.note-grid{
+.note-head{
     width: 99.4%;
     margin: 10px auto;
 }
@@ -58,4 +80,93 @@ header>h1{
     border: 0px;
     border-radius: 5px;
     margin-left: 20px;
+}
+
+.note-container{
+    display: grid;
+    margin-left: 10px;
+    grid-template-columns: 200px 200px 200px 200px 200px 200px;
+    column-gap: 50px;
+    /* grid-column-start: 1;
+    grid-column-end: 5; */
+    
+}
+
+.cards{
+    padding: 5px;
+    color: rgb(255, 0, 76) ;
+    background-color: rgba(45, 41, 58, 0.979);
+    width: 200px;
+    height: 200px;
+    margin: 15px 15px;
+    box-shadow: 5px 10px 10px #888888;
+}
+
+.card-title{
+    color: #00ffae;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 25px;
+}
+
+.card-dec{
+    color: #ffc400;
+    word-wrap: break-word;
+    overflow: auto;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 15px;
+    height: 100px;
+    width: 180px;
+    padding-right: 5px;
+}
+
+.edit-card-button{
+    margin-left: 40px;
+    margin-top: 115px;
+    font-size: 20px;
+    background-color: rgb(6, 209, 43);
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 7px 10px 8px #161515;
+}
+
+.card-dec::-webkit-scrollbar{
+    width: 4px;
+}
+
+.card-dec::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background: rgb(31, 31, 31);        /* color of the tracking area */
+  }
+  
+.card-dec::-webkit-scrollbar-thumb {
+    background-color: rgb(82, 82, 82);    /* color of the scroll thumb */
+         border-radius:3px;
+  }
+
+
+
+
+.delete-card-button{
+    
+    margin-left: 25px;
+    font-size: 20px;
+    box-shadow: 7px 9px 8px #161515;
+    background-color: #e41010;
+    border: none;
+    padding: 5px;
+    border-radius: 5px
+}
+.edit-card-button:hover{
+    background-color: rgb(68, 244, 77);
+    color: rgb(212, 0, 255);
+}
+
+.delete-card-button:hover{
+    background-color: rgb(246, 69, 49);
+    color: white;
 }
