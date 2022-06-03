@@ -1,6 +1,7 @@
 // let count = localStorage.length;
-let mynotes = [];
+
 create();
+
 function add_fun() {
   let note_title = document.getElementById("note-title").value;
   let note_dec = document.getElementById("note-des").value;
@@ -15,8 +16,19 @@ function add_fun() {
     let notes = {};
     notes.title = note_title;
     notes.dec = note_dec;
-    mynotes.push(notes);
-    localStorage.setItem("note", JSON.stringify(mynotes));
+
+    if (localStorage.length == 0) {
+      let mynote = [];
+      mynote.push(notes);
+      localStorage.setItem("note", JSON.stringify(mynote));
+    } else {
+      let mynotes = localStorage.getItem("note");
+      let temp2 = JSON.parse(mynotes);
+      temp2.push(notes);
+
+      //let mynotes.push(notes);
+      localStorage.setItem("note", JSON.stringify(temp2));
+    }
     // let str = JSON.stringify(notes);
     // localStorage.setItem(count, str);
     // count++;
