@@ -14,6 +14,21 @@ let months = [
   "December",
 ];
 let id = 0;
+checkid();
+
+function checkid() {
+  let a = JSON.parse(localStorage.getItem("note"));
+  //   console.log(a.length);
+  if (a.length == 0) {
+    // console.log("Now empty");
+    id = 0;
+  } else {
+    // console.log(a.length);
+    id = a[a.length - 1].id + 1;
+    // console.log(id);
+    // id = a.id + 1;
+  }
+}
 create();
 
 function add_fun() {
@@ -43,7 +58,7 @@ function add_fun() {
     notes.hour = hour;
     notes.min = min;
 
-    id++;
+    id += 1;
 
     if (localStorage.length == 0) {
       let mynote = [];
@@ -75,8 +90,10 @@ function create() {
   let date = "";
   let obj = [];
   obj = JSON.parse(localStorage.getItem("note"));
+  checkid();
   //   console.log(typeof obj);
   //   console.log(obj);
+
   for (var x in obj) {
     date = `<div>${obj[x].date} ${obj[x].month} ${obj[x].year} / ${obj[x].hour}:${obj[x].min}</div>`;
     slip += `<div class="cards">
@@ -85,15 +102,14 @@ function create() {
         <div id ="date-container" class="date-time">${date}</div>
         <div class="card-dec">
         ${obj[x].dec}</div>
-        <button type = "button" class="edit-card-button">Edit</button>
-        <button type = "button" class="delete-card-button">Delete</button>
+        <button type = "button" id=edit-btn class="edit-card-button" onclick="edt()">Edit</button>
+        <button type = "button" id=del-btn class="delete-card-button" onclick="del(${obj[x].id})">Delete</button>
     </div>
     </div>`;
-    // let a = document.getElementById("date-container");
-    // a.innerHTML = date;
     let temp = document.getElementById("ntc");
     temp.innerHTML = slip;
   }
+
   //   for (let index = 0; index < obj.length; index++) {
   //     console.log("Hiiiiiiii");
   //     console.log(obj[index], "\n");
@@ -109,6 +125,27 @@ function create() {
   //     </div>`;
   //     let temp = document.getElementById("ntc");
   //     temp.innerHTML = slip;
+}
+
+function del(id) {
+  //   console.log(id);
+  let index = 0;
+  let data = JSON.parse(localStorage.getItem("note"));
+  for (index; index < data.length; index += 1) {
+    if (data[index].id == id) {
+      //   console.log(index);
+      //   console.log("catched id = ", id, "checked id =", data[index].id);
+      data.splice(index, 1);
+      localStorage.setItem("note", JSON.stringify(data));
+    }
+  }
+  create();
+  if (data.length == 0) {
+    id = 0;
+    let x = document.getElementById("ntc");
+    x.innerHTML = "";
+  }
+  //   console.log(data);
 }
 //   for (var count in localStorage) {
 //     // let data = localStorage[key];
