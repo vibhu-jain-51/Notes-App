@@ -1,10 +1,30 @@
 // let count = localStorage.length;
-
+let months = [
+  "January",
+  "Febuary",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+let id = 0;
 create();
 
 function add_fun() {
   let note_title = document.getElementById("note-title").value;
   let note_dec = document.getElementById("note-des").value;
+  let date = new Date();
+  let today_date = date.getDate(),
+    month = date.getMonth(),
+    year = date.getFullYear(),
+    hour = date.getHours(),
+    min = date.getMinutes();
 
   if (note_dec == "") {
     note_dec = "No description!";
@@ -16,6 +36,14 @@ function add_fun() {
     let notes = {};
     notes.title = note_title;
     notes.dec = note_dec;
+    notes.id = id;
+    notes.date = today_date;
+    notes.month = months[month];
+    notes.year = year;
+    notes.hour = hour;
+    notes.min = min;
+
+    id++;
 
     if (localStorage.length == 0) {
       let mynote = [];
@@ -44,20 +72,25 @@ function clr() {
 
 function create() {
   let slip = "";
+  let date = "";
   let obj = [];
   obj = JSON.parse(localStorage.getItem("note"));
   //   console.log(typeof obj);
   //   console.log(obj);
   for (var x in obj) {
+    date = `<div>${obj[x].date} ${obj[x].month} ${obj[x].year} / ${obj[x].hour}:${obj[x].min}</div>`;
     slip += `<div class="cards">
     <div>
         <p class="card-title">${obj[x].title}</p>
+        <div id ="date-container" class="date-time">${date}</div>
         <div class="card-dec">
         ${obj[x].dec}</div>
         <button type = "button" class="edit-card-button">Edit</button>
         <button type = "button" class="delete-card-button">Delete</button>
     </div>
     </div>`;
+    // let a = document.getElementById("date-container");
+    // a.innerHTML = date;
     let temp = document.getElementById("ntc");
     temp.innerHTML = slip;
   }

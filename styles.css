@@ -96,8 +96,8 @@ li:hover{
     padding: 5px;
     color: rgb(255, 0, 76) ;
     background-color: rgba(45, 41, 58, 0.979);
-    width: 200px;
-    height: 200px;
+    width: 210px;
+    height: 215px;
     margin: 15px 15px;
     box-shadow: 5px 10px 10px #888888;
 }
@@ -120,12 +120,12 @@ li:hover{
     font-size: 15px;
     height: 100px;
     width: 180px;
-    padding-right: 5px;
+    padding-right: 6px;
 }
 
 .edit-card-button{
     margin-left: 40px;
-    margin-top: 115px;
+    margin-top: 118px;
     font-size: 20px;
     background-color: rgb(6, 209, 43);
     border: none;
@@ -169,4 +169,11 @@ li:hover{
 .delete-card-button:hover{
     background-color: rgb(246, 69, 49);
     color: white;
+}
+
+.date-time{
+    margin-left: 10px;
+    color: rgb(165, 165, 165);
+    font-size: 11px;
+    font-weight: normal;
 }
