@@ -96,14 +96,15 @@ function create() {
 
   for (var x in obj) {
     date = `<div>${obj[x].date} ${obj[x].month} ${obj[x].year} / ${obj[x].hour}:${obj[x].min}</div>`;
-    slip += `<div class="cards">
+    slip += `<div id="${obj[x].id}" class="cards">
     <div>
-        <p class="card-title">${obj[x].title}</p>
+        <div id="title-container"><p class="card-title">${obj[x].title}</p></div>
         <div id ="date-container" class="date-time">${date}</div>
-        <div class="card-dec">
-        ${obj[x].dec}</div>
-        <button type = "button" id=edit-btn class="edit-card-button" onclick="edt()">Edit</button>
-        <button type = "button" id=del-btn class="delete-card-button" onclick="del(${obj[x].id})">Delete</button>
+        <div id="desc-container"><div class="card-dec">${obj[x].dec}</div></div>
+        <span id = ed-bt-ct>
+        <button type = "button" id=edit-btn class="edit-card-button" onclick="edt(${obj[x].id})">Edit</button></span>
+        <span id = del-bt-ct>
+        <button type = "button" id=del-btn class="delete-card-button" onclick="del(${obj[x].id})">Delete</button></span>
     </div>
     </div>`;
     let temp = document.getElementById("ntc");
@@ -147,6 +148,58 @@ function del(id) {
   }
   //   console.log(data);
 }
+
+function edt(id) {
+  let date = new Date();
+  let today_date = date.getDate(),
+    month = date.getMonth(),
+    year = date.getFullYear(),
+    hour = date.getHours(),
+    min = date.getMinutes();
+  let input1 = `<input type="text" id="te"class="title-edit-box">`;
+  let input2 = `<input type="text" id="de"class="desc-edit-box">`;
+  let save_btn = `<button type = "button" id="save-btn" class="save-card-button">Save</button>`;
+  let data = JSON.parse(localStorage.getItem("note"));
+  // let index = 0;
+  for (let index = 0; index < data.length; index += 1) {
+    if (data[index].id == id) {
+      let valt = data[index].title;
+      // console.log(valt);
+      let vald = data[index].dec;
+      // console.log(vald);
+      let a = document.getElementById(id);
+      let x = a.querySelector("#title-container");
+      // let b = document.getElementById(id);
+      let y = a.querySelector("#desc-container");
+      x.innerHTML = input1;
+      x.querySelector("#te").value = valt;
+      y.innerHTML = input2;
+      y.querySelector("#de").value = vald;
+      let btn = a.querySelector("#ed-bt-ct");
+      btn.innerHTML = save_btn;
+      let w = a.querySelector("#save-btn");
+      w.addEventListener("click", function save() {
+        let new_t = a.querySelector("#te").value;
+        let new_d = a.querySelector("#de").value;
+        // console.log(new_val);
+        data[index].title = new_t;
+        data[index].dec = new_d;
+        data[index].date = today_date;
+        data[index].month = months[month];
+        data[index].year = year;
+        data[index].hour = hour;
+        data[index].min = min;
+        localStorage.setItem("note", JSON.stringify(data));
+        create();
+      });
+    }
+  }
+}
+
+// function save(){
+
+// }
+
 //   for (var count in localStorage) {
 //     // let data = localStorage[key];
 //     let parsed_data = JSON.parse(localStorage[count]);
