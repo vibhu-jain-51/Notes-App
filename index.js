@@ -1,11 +1,11 @@
-// let fetchRes = fetch("https://notesnodeapi.herokuapp.com/gnote/");
-// // fetchRes is the promise to resolve
-// // it by using.then() method
-// fetchRes
-//   .then((res) => res.json())
-//   .then((d) => {
-//     console.log(d);
-//   });
+let fetchRes = fetch("https://notesnodeapi.herokuapp.com/gnote/");
+// fetchRes is the promise to resolve
+// it by using.then() method
+fetchRes
+  .then((res) => res.json())
+  .then((d) => {
+    console.log(d);
+  });
 
 // let count = localStorage.length;
 let months = [
@@ -24,18 +24,25 @@ let months = [
 ];
 let id = 0;
 checkid();
+remove_del_obj();
+
+function remove_del_obj() {
+  localStorage.removeItem("del_notes");
+}
 
 function checkid() {
+  // console.log(localStorage.getItem("note").length);
   let a = JSON.parse(localStorage.getItem("note"));
+  let len = a.length;
   let b = JSON.parse(localStorage.getItem("del_notes"));
   if (a == null) {
     //   console.log(a.length);
     // console.log("Now empty");
     id = 0;
   }
-  if (a != null && b == null) {
+  if (a.length != 0 && b == null) {
     // console.log(a.length);
-    id = a[a.length - 1].id + 1;
+    id = a[len - 1].id + 1;
     // console.log(id);
     // id = a.id + 1;
   }
