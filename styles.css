@@ -6,6 +6,11 @@ header>h1{
     text-align: center;
 }
 
+/* body{
+    background-color: #161515;
+    color: rgb(255, 10, 10);
+} */
+
 .navbar{
     padding: 0px;
     margin: 0px;
@@ -33,6 +38,7 @@ li:hover{
     margin: 10px auto;
     width: 99.4%;
     height: 200px;
+    border-radius: 10px;
 }
 
 .title{
@@ -199,10 +205,11 @@ li:hover{
 }
 
 .title-edit-box{
+    position: absolute;
 margin-left: 10px;
 margin-top: 5px;
 font-size: 25px;
-width: 175px;
+width: 185px;
 background-color: rgba(45, 41, 58, 0.979);
 color: #00ffae;
 border: none;
@@ -212,10 +219,11 @@ border: none;
     color: #ffc400;
     background-color: rgba(45, 41, 58, 0.979);
     border: none;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
+    white-space:nowrap;
     overflow: auto;
     position: absolute;
-    margin-top: 5px;
+    margin-top: 60px;
     margin-left: 10px;
     font-size: 15px;
     height: 100px;
@@ -225,7 +233,7 @@ border: none;
 
 .save-card-button{
     margin-left: 40px;
-    margin-top: 118px;
+    margin-top: 170px;
     font-size: 20px;
     background-color: rgb(70, 113, 255);
     border: none;
