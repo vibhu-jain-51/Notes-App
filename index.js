@@ -1,3 +1,12 @@
+// let fetchRes = fetch("https://notesnodeapi.herokuapp.com/gnote/");
+// // fetchRes is the promise to resolve
+// // it by using.then() method
+// fetchRes
+//   .then((res) => res.json())
+//   .then((d) => {
+//     console.log(d);
+//   });
+
 // let count = localStorage.length;
 let months = [
   "January",
@@ -18,16 +27,21 @@ checkid();
 
 function checkid() {
   let a = JSON.parse(localStorage.getItem("note"));
-  //   console.log(a.length);
-  if (a.length == 0) {
+  let b = JSON.parse(localStorage.getItem("del_notes"));
+  if (a == null) {
+    //   console.log(a.length);
     // console.log("Now empty");
     id = 0;
-  } else {
+  }
+  if (a != null && b == null) {
     // console.log(a.length);
     id = a[a.length - 1].id + 1;
     // console.log(id);
     // id = a.id + 1;
   }
+  // if (a != null && b != null) {
+  //   id = a[a.length - 1].id + 1;
+  // }
 }
 create();
 
@@ -95,8 +109,9 @@ function create() {
   //   console.log(obj);
 
   for (var x in obj) {
-    date = `<div>${obj[x].date} ${obj[x].month} ${obj[x].year} / ${obj[x].hour}:${obj[x].min}</div>`;
-    slip += `<div id="${obj[x].id}" class="cards">
+    if (obj.length != 0) {
+      date = `<div>${obj[x].date} ${obj[x].month} ${obj[x].year} / ${obj[x].hour}:${obj[x].min}</div>`;
+      slip += `<div id="${obj[x].id}" class="cards">
     <div>
         <div id="title-container"><p class="card-title">${obj[x].title}</p></div>
         <div id ="date-container" class="date-time">${date}</div>
@@ -107,8 +122,9 @@ function create() {
         <button type = "button" id=del-btn class="delete-card-button" onclick="del(${obj[x].id})">Delete</button></span>
     </div>
     </div>`;
-    let temp = document.getElementById("ntc");
-    temp.innerHTML = slip;
+      let temp = document.getElementById("ntc");
+      temp.innerHTML = slip;
+    }
   }
 
   //   for (let index = 0; index < obj.length; index++) {
@@ -130,16 +146,25 @@ function create() {
 
 function del(id) {
   //   console.log(id);
+  let back = `<button id="bk-btn" class="bkup-btn" onclick="backup(${id})">Backup</button>`;
+  let del_note = [],
+    del_obj = {};
   let index = 0;
   let data = JSON.parse(localStorage.getItem("note"));
   for (index; index < data.length; index += 1) {
     if (data[index].id == id) {
       //   console.log(index);
       //   console.log("catched id = ", id, "checked id =", data[index].id);
+      del_obj = data[index];
+      // console.log(del_obj);
+      del_note.push(del_obj);
+      localStorage.setItem("del_notes", JSON.stringify(del_note));
       data.splice(index, 1);
       localStorage.setItem("note", JSON.stringify(data));
     }
   }
+  let x = document.getElementById("backup-btn-container");
+  x.innerHTML = back;
   create();
   if (data.length == 0) {
     id = 0;
@@ -196,6 +221,37 @@ function edt(id) {
   }
 }
 
+function backup(t) {
+  let del_items = JSON.parse(localStorage.getItem("del_notes"));
+  let note_list = JSON.parse(localStorage.getItem("note"));
+  // for (let index = note_list.length; index < del_items.length; index++) {
+  //   del_items[index].id = id;
+  //   note_list.push(del_items[index]);
+  //   del_items.splice(index, 1);
+  // }
+  // let index = note_list.length;
+  // let x = 0;
+  // let y = del_items.length;
+  // while (y != 0) {
+  //   // del_items[x].id = id + 1;
+  //   note_list.push(del_items[index]);
+  //   del_items.splice(x, 1);
+  //   // x += 1;
+  //   y -= 1;
+  // }
+  for (index = 0; index < del_items.length; index++) {
+    if (del_items[index].id == t) {
+      note_list.splice(note_list.length, 0, del_items[index]);
+      localStorage.removeItem("del_notes");
+    }
+  }
+  localStorage.setItem("note", JSON.stringify(note_list));
+  let bkupct = document.getElementById("backup-btn-container");
+  bkupct.innerHTML = "";
+  // localStorage.removeItem("del_items");
+  create();
+}
+
 // function save(){
 
 // }
@@ -219,3 +275,5 @@ function edt(id) {
 //     temp.innerHTML = slip;
 //   }
 // }
+
+// https://notesnodeapi.herokuapp.com/gnote
