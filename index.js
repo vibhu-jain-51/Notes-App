@@ -1,11 +1,35 @@
-let fetchRes = fetch("https://notesnodeapi.herokuapp.com/gnote/");
-// fetchRes is the promise to resolve
-// it by using.then() method
-fetchRes
-  .then((res) => res.json())
-  .then((d) => {
-    console.log(d);
-  });
+var sel_id;
+
+// let togetdata = fetch("https://notesnodeapi.herokuapp.com/gnote/");
+// // fetchRes is the promise to resolve
+// // it by using.then() method
+// togetdata
+//   .then((res) => res.json())
+//   .then((obj) => {
+//     create(obj);
+//   });
+
+//   let topostdata = fetch("https://notesnodeapi.herokuapp.com/pnote/");
+// // fetchRes is the promise to resolve
+// // it by using.then() method
+// topostdata.
+
+// const data = { username: "example" };
+
+// fetch("https://notesnodeapi.herokuapp.com/pnote/", {
+//   method: 'POST', // or 'PUT'
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify(data),
+// })
+// .then(response => response.json())
+// .then(data => {
+//   console.log('Success:', data);
+// })
+// .catch((error) => {
+//   console.error('Error:', error);
+// });
 
 // let count = localStorage.length;
 let months = [
@@ -22,34 +46,35 @@ let months = [
   "November",
   "December",
 ];
-let id = 0;
-checkid();
-remove_del_obj();
+// let id = 0;
+// checkid();
+// remove_del_obj();
 
-function remove_del_obj() {
-  localStorage.removeItem("del_notes");
-}
+// function remove_del_obj() {
+//   localStorage.removeItem("del_notes");
+// }
 
-function checkid() {
-  // console.log(localStorage.getItem("note").length);
-  let a = JSON.parse(localStorage.getItem("note"));
-  let len = a.length;
-  let b = JSON.parse(localStorage.getItem("del_notes"));
-  if (a == null) {
-    //   console.log(a.length);
-    // console.log("Now empty");
-    id = 0;
-  }
-  if (a.length != 0 && b == null) {
-    // console.log(a.length);
-    id = a[len - 1].id + 1;
-    // console.log(id);
-    // id = a.id + 1;
-  }
-  // if (a != null && b != null) {
-  //   id = a[a.length - 1].id + 1;
-  // }
-}
+// function checkid() {
+//   // console.log(localStorage.getItem("note").length);
+//   let a = JSON.parse(localStorage.getItem("note"));
+//   let len = a.length;
+//   let b = JSON.parse(localStorage.getItem("del_notes"));
+//   if (a == null) {
+//     //   console.log(a.length);
+//     // console.log("Now empty");
+//     id = 0;
+//   }
+//   if (a.length != 0 && b == null) {
+//     // console.log(a.length);
+//     id = a[len - 1].id + 1;
+//     // console.log(id);
+//     // id = a.id + 1;
+//   }
+//   // if (a != null && b != null) {
+//   //   id = a[a.length - 1].id + 1;
+//   // }
+// }
+
 create();
 
 function add_fun() {
@@ -72,32 +97,50 @@ function add_fun() {
     let notes = {};
     notes.title = note_title;
     notes.dec = note_dec;
-    notes.id = id;
+    // notes.id = id;
     notes.date = today_date;
     notes.month = months[month];
     notes.year = year;
     notes.hour = hour;
     notes.min = min;
 
-    id += 1;
+    // id += 1;
 
-    if (localStorage.length == 0) {
-      let mynote = [];
-      mynote.push(notes);
-      localStorage.setItem("note", JSON.stringify(mynote));
-    } else {
-      let mynotes = localStorage.getItem("note");
-      let temp2 = JSON.parse(mynotes);
-      temp2.push(notes);
+    fetch("https://notesnodeapi.herokuapp.com/pnote/", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(notes),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        create();
+        clr();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
 
-      //let mynotes.push(notes);
-      localStorage.setItem("note", JSON.stringify(temp2));
-    }
+    // if (localStorage.length == 0) {
+    //   let mynote = [];
+    //   mynote.push(notes);
+    //   localStorage.setItem("note", JSON.stringify(mynote));
+    // } else {
+    //   let mynotes = localStorage.getItem("note");
+    //   let temp2 = JSON.parse(mynotes);
+    //   temp2.push(notes);
+
+    //   //let mynotes.push(notes);
+    //   localStorage.setItem("note", JSON.stringify(temp2));
+    // }
     // let str = JSON.stringify(notes);
     // localStorage.setItem(count, str);
     // count++;
-    create();
-    clr();
+
+    // create();
+    // clr();
   }
 }
 // for clearing the input boxes
@@ -107,33 +150,46 @@ function clr() {
 }
 
 function create() {
-  let slip = "";
-  let date = "";
-  let obj = [];
-  obj = JSON.parse(localStorage.getItem("note"));
-  checkid();
-  //   console.log(typeof obj);
-  //   console.log(obj);
-
-  for (var x in obj) {
-    if (obj.length != 0) {
-      date = `<div>${obj[x].date} ${obj[x].month} ${obj[x].year} / ${obj[x].hour}:${obj[x].min}</div>`;
-      slip += `<div id="${obj[x].id}" class="cards">
+  let togetdata = fetch("https://notesnodeapi.herokuapp.com/gnote/");
+  // fetchRes is the promise to resolve
+  // it by using.then() method
+  togetdata
+    .then((res) => res.json())
+    .then((obj) => {
+      // console.log(obj);
+      let slip = "";
+      let date = "";
+      let temp = "";
+      //let newid = obj._id;
+      // console.log(newid);
+      // let obj = [];
+      // obj = JSON.parse(localStorage.getItem("note"));
+      // checkid();
+      //   console.log(typeof obj);
+      //   console.log(obj);
+      if (obj.length == 0) {
+        let temp = document.getElementById("ntc");
+        temp.innerHTML = "";
+      }
+      for (var x in obj) {
+        let id = obj[x]._id;
+        // console.log(id);
+        date = `<div>${obj[x].date} ${obj[x].month} ${obj[x].year} / ${obj[x].hour}:${obj[x].min}</div>`;
+        slip += `<div id="${obj[x]._id}" class="cards">
     <div>
         <div id="title-container"><p class="card-title">${obj[x].title}</p></div>
         <div id ="date-container" class="date-time">${date}</div>
         <div id="desc-container"><div class="card-dec">${obj[x].dec}</div></div>
         <span id = ed-bt-ct>
-        <button type = "button" id=edit-btn class="edit-card-button" onclick="edt(${obj[x].id})">Edit</button></span>
+        <button type = "button" id="edit-btn" class="edit-card-button" onClick="edt('${id}')">Edit</button></span>
         <span id = del-bt-ct>
-        <button type = "button" id=del-btn class="delete-card-button" onclick="del(${obj[x].id})">Delete</button></span>
+        <button type = "button" id="del-btn" class="delete-card-button" onclick="del('${id}')">Delete</button></span>
     </div>
     </div>`;
-      let temp = document.getElementById("ntc");
-      temp.innerHTML = slip;
-    }
-  }
-
+        temp = document.getElementById("ntc");
+        temp.innerHTML = slip;
+      }
+    });
   //   for (let index = 0; index < obj.length; index++) {
   //     console.log("Hiiiiiiii");
   //     console.log(obj[index], "\n");
@@ -152,36 +208,50 @@ function create() {
 }
 
 function del(id) {
-  //   console.log(id);
-  let back = `<button id="bk-btn" class="bkup-btn" onclick="backup(${id})">Backup</button>`;
-  let del_note = [],
-    del_obj = {};
-  let index = 0;
-  let data = JSON.parse(localStorage.getItem("note"));
-  for (index; index < data.length; index += 1) {
-    if (data[index].id == id) {
-      //   console.log(index);
-      //   console.log("catched id = ", id, "checked id =", data[index].id);
-      del_obj = data[index];
-      // console.log(del_obj);
-      del_note.push(del_obj);
-      localStorage.setItem("del_notes", JSON.stringify(del_note));
-      data.splice(index, 1);
-      localStorage.setItem("note", JSON.stringify(data));
-    }
-  }
+  // alert("Hii");
+  // console.log(id);
+  let back = `<button id="bk-btn" class="bkup-btn" onClick="backup()">Backup</button>`;
+  fetch("https://notesnodeapi.herokuapp.com/dnote/" + id, {
+    method: "DELETE",
+  }).then(() => create()); // or res.json()
+  // .then((res) => res.text());
+  let togetdata = fetch("https://notesnodeapi.herokuapp.com/gnote/" + id);
+  // fetchRes is the promise to resolve
+  // it by using.then() method
+  togetdata
+    .then((res) => res.json())
+    .then((obj) => {
+      localStorage.setItem("del_note", JSON.stringify(obj));
+    });
+  // let del_note = [],
+  //   del_obj = {};
+  // let index = 0;
+  // let data = JSON.parse(localStorage.getItem("note"));
+  // for (index; index < data.length; index += 1) {
+  //   if (data[index].id == id) {
+  //     //   console.log(index);
+  //     //   console.log("catched id = ", id, "checked id =", data[index].id);
+  //     del_obj = data[index];
+  //     // console.log(del_obj);
+  //     del_note.push(del_obj);
+  //     localStorage.setItem("del_notes", JSON.stringify(del_note));
+  //     data.splice(index, 1);
+  //     localStorage.setItem("note", JSON.stringify(data));
+  //   }
+  // }
   let x = document.getElementById("backup-btn-container");
   x.innerHTML = back;
-  create();
-  if (data.length == 0) {
-    id = 0;
-    let x = document.getElementById("ntc");
-    x.innerHTML = "";
-  }
+  // let x = document.getElementById("ntc");
+  // if (data.length == 0) {
+  //   id = 0;
+  // x.innerHTML = "";
+  // }
   //   console.log(data);
 }
 
 function edt(id) {
+  let valt = "";
+  let vald = "";
   let date = new Date();
   let today_date = date.getDate(),
     month = date.getMonth(),
@@ -191,18 +261,64 @@ function edt(id) {
   let input1 = `<input type="text" id="te"class="title-edit-box">`;
   let input2 = `<input type="text" id="de"class="desc-edit-box">`;
   let save_btn = `<button type = "button" id="save-btn" class="save-card-button">Save</button>`;
-  let data = JSON.parse(localStorage.getItem("note"));
-  // let index = 0;
-  for (let index = 0; index < data.length; index += 1) {
-    if (data[index].id == id) {
-      let valt = data[index].title;
+  let togetdata = fetch("https://notesnodeapi.herokuapp.com/gnote/" + id);
+  togetdata
+    .then((res) => res.json())
+    .then((obj) => {
+      console.log(obj);
+      valt = obj.title;
+      vald = obj.dec;
       // console.log(valt);
-      let vald = data[index].dec;
+      // console.log(vald);
+
+      // let valt = data[id].title;
+      // // console.log(valt);
+      // let vald = data[id].dec;
+      // let index = 0;
+      // for (let index = 0; index < data.length; index += 1) {
+      //   if (data[index].id == id) {
+      //     let valt = data[index].title;
+      //     // console.log(valt);
+      //     let vald = data[index].dec;
+      //     // console.log(vald);
+      //     let a = document.getElementById(id);
+      //     let x = a.querySelector("#title-container");
+      //     // let b = document.getElementById(id);
+      //     let y = a.querySelector("#desc-container");
+      //     x.innerHTML = input1;
+      //     x.querySelector("#te").value = valt;
+      //     y.innerHTML = input2;
+      //     y.querySelector("#de").value = vald;
+      //     let btn = a.querySelector("#ed-bt-ct");
+      //     btn.innerHTML = save_btn;
+      //     let w = a.querySelector("#save-btn");
+      //     w.addEventListener("click", function save() {
+      //       let new_t = a.querySelector("#te").value;
+      //       let new_d = a.querySelector("#de").value;
+      //       // console.log(new_val);
+      //       data[index].title = new_t;
+      //       data[index].dec = new_d;
+      //       data[index].date = today_date;
+      //       data[index].month = months[month];
+      //       data[index].year = year;
+      //       data[index].hour = hour;
+      //       data[index].min = min;
+      //       localStorage.setItem("note", JSON.stringify(data));
+      //       create();
+      //     });
+      //   }
+      // }
+
+      // console.log(valt);
+
       // console.log(vald);
       let a = document.getElementById(id);
       let x = a.querySelector("#title-container");
+      // let valt = x.id.title;
+      // console.log(valt);
       // let b = document.getElementById(id);
       let y = a.querySelector("#desc-container");
+      // let vald = id.dec;
       x.innerHTML = input1;
       x.querySelector("#te").value = valt;
       y.innerHTML = input2;
@@ -214,23 +330,73 @@ function edt(id) {
         let new_t = a.querySelector("#te").value;
         let new_d = a.querySelector("#de").value;
         // console.log(new_val);
-        data[index].title = new_t;
-        data[index].dec = new_d;
-        data[index].date = today_date;
-        data[index].month = months[month];
-        data[index].year = year;
-        data[index].hour = hour;
-        data[index].min = min;
-        localStorage.setItem("note", JSON.stringify(data));
-        create();
+        // data[index].title = new_t;
+        // data[index].dec = new_d;
+        // data[index].date = today_date;
+        // data[index].month = months[month];
+        // data[index].year = year;
+        // data[index].hour = hour;
+        // data[index].min = min;
+        // localStorage.setItem("note", JSON.stringify(data));
+        let notes = {};
+        notes.title = new_t;
+        notes.dec = new_d;
+        // notes.id = id;
+        notes.date = today_date;
+        notes.month = months[month];
+        notes.year = year;
+        notes.hour = hour;
+        notes.min = min;
+        fetch("https://notesnodeapi.herokuapp.com/upnote/" + id, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(notes),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => create());
       });
-    }
-  }
+    });
+  // let notes = {};
+  // notes.title = notet;
+  // notes.dec = noted;
+  // // notes.id = id;
+  // notes.date = today_date;
+  // notes.month = months[month];
+  // notes.year = year;
+  // notes.hour = hour;
+  // notes.min = min;
+  // let data = JSON.parse(localStorage.getItem("note"));
 }
 
-function backup(t) {
-  let del_items = JSON.parse(localStorage.getItem("del_notes"));
-  let note_list = JSON.parse(localStorage.getItem("note"));
+function backup() {
+  let del_items = JSON.parse(localStorage.getItem("del_note"));
+  // let note_list = JSON.parse(localStorage.getItem("note"));
+
+  fetch("https://notesnodeapi.herokuapp.com/pnote/", {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(del_items),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+      create();
+      clr();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  let x = document.getElementById("backup-btn-container");
+  x.innerHTML = "";
+  localStorage.removeItem("del_note");
+  create();
+
   // for (let index = note_list.length; index < del_items.length; index++) {
   //   del_items[index].id = id;
   //   note_list.push(del_items[index]);
@@ -246,17 +412,16 @@ function backup(t) {
   //   // x += 1;
   //   y -= 1;
   // }
-  for (index = 0; index < del_items.length; index++) {
-    if (del_items[index].id == t) {
-      note_list.splice(note_list.length, 0, del_items[index]);
-      localStorage.removeItem("del_notes");
-    }
-  }
-  localStorage.setItem("note", JSON.stringify(note_list));
-  let bkupct = document.getElementById("backup-btn-container");
-  bkupct.innerHTML = "";
+  // for (index = 0; index < del_items.length; index++) {
+  //   if (del_items[index].id == t) {
+  //     note_list.splice(note_list.length, 0, del_items[index]);
+  //     localStorage.removeItem("del_notes");
+  //   }
+  // }
+  // localStorage.setItem("note", JSON.stringify(note_list));
+  // let bkupct = document.getElementById("backup-btn-container");
+  // bkupct.innerHTML = "";
   // localStorage.removeItem("del_items");
-  create();
 }
 
 // function save(){
